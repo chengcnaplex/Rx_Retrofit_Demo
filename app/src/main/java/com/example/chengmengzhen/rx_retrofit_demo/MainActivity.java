@@ -18,6 +18,7 @@ import retrofit.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
     public static final String API_URL = "https://api.github.com/";
+    private Call<List<Contributor>> call;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +43,31 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         // 构建url框架
-        GitHubUrl github = retrofit.create(GitHubUrl.class);
+        GitHubUrl gitHubUrl = retrofit.create(GitHubUrl.class);
 
         // 给框架填入数据，成为一个完整的url
-        final Call<List<Contributor>> call = github.contributors("square", "retrofit");
+
+        call = gitHubUrl.contributors("square", "retrofit");
+
+        /*****************************发送同步请求*****************************************
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                try {
+                    Response<List<Contributor>> response = call.execute();
+                    List<Contributor> contributors = response.body();
+                    for (Contributor contributor : contributors) {
+                        Log.e("MainActivity", contributor.login + " (" + contributor.contributions + ")");
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }.start();
+        *********************************************************************************/
+
         // 发送url请求后的回调  异步请求
         call.enqueue(new Callback<List<Contributor>>() {
             /****************************************************************************
@@ -62,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.e("MainActivity", contributor.login + " (" + contributor.contributions + ")");
                 }
             }
+
             @Override
             public void onFailure(Throwable t) {
                 Log.e("MainActivity", t.toString());
@@ -72,5 +95,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        call.cancel();
     }
 }
