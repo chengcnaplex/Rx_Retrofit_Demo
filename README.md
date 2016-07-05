@@ -29,7 +29,7 @@ Retrofit的例子说明。
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
-            /********************************************************
+            /******************************************************************************************************
              *      在Retrofit 1.9中，GsonConverter 包含在了package 中而且自动在RestAdapter创建的时候被初始化。
              *      这样来自服务器的son结果会自动解析成定义好了的Data Access Object（DAO）
              *
@@ -40,7 +40,7 @@ Retrofit的例子说明。
              *      如果你想接收json 结果并解析成DAO，你必须把Gson Converter 作为一个独立的依赖添加进来。
              *
              *      compile 'com.squareup.retrofit:converter-gson:2.0.0-beta1'
-             */
+             *****************************************************************************************************/
             // 如果你的公司用的服务器API_URL不会变，可以考虑封装起来
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(API_URL)
