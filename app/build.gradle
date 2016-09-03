@@ -28,5 +28,6 @@ dependencies {
     compile 'com.squareup.okio:okio:1.6.0'
     compile 'com.squareup.retrofit:converter-gson:2.0.0-beta2'
     compile 'com.jakewharton:butterknife:5.1.1'
-    compile 'com.google.code.gson:gson:2.2.4'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0-beta4'
+    compile 'io.reactivex:rxandroid:1.1.0'
 }
