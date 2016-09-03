@@ -10,7 +10,8 @@
     tools:context="com.example.chengmengzhen.rx_retrofit_demo.MainActivity">
 
     <TextView
+        android:id="@+id/showText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:text="" />
 </RelativeLayout>

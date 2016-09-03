@@ -3,6 +3,7 @@ package com.example.chengmengzhen.rx_retrofit_demo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.example.chengmengzhen.rx_retrofit_demo.bean.Contributor;
 import com.example.chengmengzhen.rx_retrofit_demo.url.GitHubUrl;
@@ -22,8 +23,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         /********************************************************
          *      在Retrofit 1.9中，GsonConverter 包含在了package 中而且自动在RestAdapter创建的时候被初始化。
          *      这样来自服务器的son结果会自动解析成定义好了的Data Access Object（DAO）
@@ -46,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
         GitHubUrl gitHubUrl = retrofit.create(GitHubUrl.class);
 
         // 给框架填入数据，成为一个完整的url
-
         call = gitHubUrl.contributors("square", "retrofit");
 
         /*****************************发送同步请求*****************************************
@@ -79,10 +81,14 @@ public class MainActivity extends AppCompatActivity {
              ****************************************************************************/
             @Override
             public void onResponse(Response<List<Contributor>> response, Retrofit retrofit) {
+
                 List<Contributor> contributors = response.body();
-                for (Contributor contributor : contributors) {
-                    Log.e("MainActivity", contributor.login + " (" + contributor.contributions + ")");
-                }
+
+                String showText = "";
+                for (Contributor contributor : contributors)
+                    showText += contributor.login + ": " + contributor.contributions + "\n";
+
+                ((TextView)findViewById(R.id.showText)).setText(showText);
             }
 
             @Override
