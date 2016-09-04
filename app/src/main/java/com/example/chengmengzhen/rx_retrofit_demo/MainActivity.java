@@ -9,9 +9,11 @@ import android.widget.TextView;
 
 import com.example.chengmengzhen.rx_retrofit_demo.bean.Contributor;
 import com.example.chengmengzhen.rx_retrofit_demo.url.GitHubUrl;
+import com.jakewharton.rxbinding.view.RxView;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Observer;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -63,9 +65,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        clean.setOnClickListener(new View.OnClickListener() {
+        Observable<Void> rxjavaObservable = RxView.clicks(rxjava);
+        rxjavaObservable.subscribe(new Action1<Void>() {
             @Override
-            public void onClick(View view) {
+            public void call(Void x) {
+                asyncAccessRemote();
+            }
+        });
+
+        Observable<Void> cleanObservable = RxView.clicks(clean);
+        cleanObservable.subscribe(new Action1<Void>() {
+            @Override
+            public void call(Void x) {
+                // do what you need here
                 ((TextView)findViewById(R.id.showText)).setText("");
             }
         });
